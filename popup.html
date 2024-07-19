@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>uStock Original</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #202124;
+      color: #ffffff;
+      width: 300px;
+      padding: 10px;
+      border-radius: 10px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+      position: relative;
+    }
+    h1 {
+      font-size: 18px;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    .stock-price {
+      font-size: 28px;
+      text-align: center;
+      margin-top: 10px;
+      margin-bottom: 20px;
+    }
+    canvas {
+      display: block;
+      margin: 0 auto;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      display: block;
+      margin: 10px auto;
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #3b893f;
+    }
+    .max-gain {
+      text-align: center;
+      margin-top: 10px;
+    }
+    .top-right-buttons {
+      position: absolute;
+      top: 0px;
+      right: 10px;
+      display: flex;
+      gap: 10px;
+    }
+    .top-left-buttons {
+      position: absolute;
+      top: 0px;
+      left: 10px;
+      display: flex;
+      gap: 10px;
+    }
+    .icon-button {
+      background-color: #333;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+    .icon-button:hover {
+      background-color: #bcbcbc;
+    }
+  </style>
+</head>
+<body>
+  <div class="top-right-buttons">
+    <button class="icon-button" id="ranksButton">&#8593;</button>
+    <button class="icon-button" id="leaderboardButton">&#129351;</button>
+  </div>
+  <div class="top-left-buttons">
+    <button class="icon-button" id="settingsButton">&#9881;</button>
+  </div>
+  <h1>uStock</h1>
+  <div class="stock-price" id="stockPrice">$100</div>
+  
+  <canvas id="stockGraph" width="200" height="200"></canvas>
+
+  <button id="increaseGainButton">Increase Stock Gain ($150)</button>
+  <div class="max-gain" id="maxGain">Current Max Stock Gain is 45</div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

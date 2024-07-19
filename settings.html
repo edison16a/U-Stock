@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Settings</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #202124;
+      color: #ffffff;
+      width: 265px;
+      height: 360px;
+      padding: 10px;
+      border-radius: 10px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    h1 {
+      font-size: 18px;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    .close-button {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background-color: #333;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+    .close-button:hover {
+      background-color: #555;
+    }
+    button {
+      margin-top: 10px;
+      display: block;
+      padding: 10px 20px;
+      background-color: #ff0000;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+        background-color: #a30000;
+    }
+    input {
+      margin-top: 10px;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #333;
+      width: 80%;
+    }
+    #imagePreview {
+      margin-top: 10px;
+      width: 75px;
+      height: 100px;
+      border-radius: 50%;
+      border: 1px solid #333;
+      background-color: #555;
+      background-size: cover;
+      background-position: center;
+    }
+  </style>
+</head>
+<body>
+  <button class="close-button" id="closeSettingsButton">&times;</button>
+  <h1>Settings</h1>
+  <input type="text" id="usernameInput" placeholder="Enter your username">
+  <input type="text" id="imageUrlInput" placeholder="Paste image URL">
+  <div id="imagePreview"></div>
+  <button id="resetStockPriceButton">Reset Stock Price</button>
+  <button id="resetMaxGain">Reset maxGain</button>
+  <button id="saveButton">Save</button>
+  <script src="settings.js"></script>
+</body>
+</html>

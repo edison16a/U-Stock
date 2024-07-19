@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Ranks</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #202124;
+      color: #ffffff;
+      width: 265px;
+      height: 360px;
+      padding: 10px;
+      border-radius: 10px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      position: relative;
+      overflow: hidden;
+    }
+    h1 {
+      font-size: 18px;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    .close-button {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background-color: #333;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+    .close-button:hover {
+      background-color: #555;
+    }
+    .progress-container {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+    .progress-bar {
+      width: 100%;
+      background-color: #333;
+      border-radius: 5px;
+      overflow: hidden;
+      margin-bottom: 5px;
+    }
+    .progress-bar div {
+      height: 5px;
+      background-color: #ff0000;
+      width: 0;
+      transition: width 0.5s;
+    }
+    .progress-text {
+      text-align: center;
+      font-size: 14px;
+      margin-bottom: 5px;
+    }
+    .rank-image {
+      height: 1500px; /* Adjust as needed */
+      width: 80px; /* Adjust as needed */
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 5px;
+      margin-top: 5px;
+      background-size: cover; /* Ensure the image covers the div */
+      background-position: center; /* Center the image */
+      object-fit: cover; /* Maintain aspect ratio */
+    }
+    .rank-up-button {
+      margin-top: 2px;
+      padding: 10px 20px;
+      background-color: #ff0000;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .rank-up-button:hover {
+      background-color: #a30000;
+    }
+    .all-ranks {
+      margin-top: 10px;
+      width: 100%;
+      text-align: center;
+      overflow-y: auto; /* Enable vertical scrolling */
+      -ms-overflow-style: none;  /* IE and Edge */
+      scrollbar-width: none;  /* Firefox */
+    }
+    .all-ranks::-webkit-scrollbar {
+      display: none;  /* Hide scrollbar for WebKit browsers */
+    }
+    .rank-item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 5px;
+      margin-top: 5px;
+    }
+    .rank-item img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover; /* Maintain aspect ratio */
+      margin-right: 10px;
+    }
+    .currentRank{
+      font-style: bold;
+    }
+  </style>
+</head>
+<body>
+  <button class="close-button" id="closeRankedButton">&times;</button>
+  <h1>Ranks</h1>
+  <div id="currentRank">Current Rank: Bronze I</div>
+  <div id="currentRankImage" class="rank-image"></div>
+
+  <div class="progress-container">
+    <div class="progress-text">Reach $50 stock price</div>
+    <div class="progress-bar"><div style="width: 50%;"></div></div>
+    <div class="progress-text">Reach $55 max gain</div>
+    <div class="progress-bar"><div style="width: 60%;"></div></div>
+  </div>
+
+  <button class="rank-up-button" id="rankUpButton">Rank Up</button>
+
+  <div class="all-ranks">
+    <h1>All Ranks</h1>
+    <div class="rank-item"><img src="bronze1.png" alt="Bronze I"> Bronze I</div>
+    <div class="rank-item"><img src="bronze1.png" alt="Bronze II"> Bronze II</div>
+    <div class="rank-item"><img src="bronze1.png" alt="Bronze III"> Bronze III</div>
+    <div class="rank-item"><img src="silver1.png" alt="Silver I"> Silver I</div>
+    <div class="rank-item"><img src="silver1.png" alt="Silver II"> Silver II</div>
+    <div class="rank-item"><img src="silver1.png" alt="Silver III"> Silver III</div>
+    <div class="rank-item"><img src="gold1.png" alt="Gold I"> Gold I</div>
+    <div class="rank-item"><img src="gold1.png" alt="Gold II"> Gold II</div>
+    <div class="rank-item"><img src="gold1.png" alt="Gold III"> Gold III</div>
+    <div class="rank-item"><img src="platinum1.png" alt="Platinum I"> Platinum I</div>
+    <div class="rank-item"><img src="platinum1.png" alt="Platinum II"> Platinum II</div>
+    <div class="rank-item"><img src="platinum1.png" alt="Platinum III"> Platinum III</div>
+    <div class="rank-item"><img src="diamond1.png" alt="Diamond I"> Diamond I</div>
+    <div class="rank-item"><img src="diamond1.png" alt="Diamond II"> Diamond II</div>
+    <div class="rank-item"><img src="diamond1.png" alt="Diamond III"> Diamond III</div>
+    <div class="rank-item"><img src="diamond1.png" alt="Diamond IV"> Diamond IV</div>
+    <div class="rank-item"><img src="diamond1.png" alt="Diamond V"> Diamond V</div>
+    <div class="rank-item"><img src="champion1.png" alt="Champion I"> Champion I</div>
+    <div class="rank-item"><img src="champion1.png" alt="Champion II"> Champion II</div>
+    <div class="rank-item"><img src="champion1.png" alt="Champion III"> Champion III</div>
+    <div class="rank-item"><img src="champion1.png" alt="Champion IV"> Champion IV</div>
+    <div class="rank-item"><img src="champion1.png" alt="Champion V"> Champion V</div>
+    <div class="rank-item"><img src="elite.png" alt="Elite"> Elite</div>    
+  </div>
+
+  <script src="ranked.js"></script>
+</body>
+</html>
