@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
         'Platinum I', 'Platinum II', 'Platinum III',
         'Diamond I', 'Diamond II', 'Diamond III', 'Diamond IV', 'Diamond V',
         'Champion I', 'Champion II', 'Champion III', 'Champion IV', 'Champion V',
-        'Elite'
+        'Elite', 'Max'
     ];
     const rankImages = {
         'Bronze I': 'bronze1.png',
@@ -31,33 +31,35 @@ document.addEventListener('DOMContentLoaded', function() {
         'Champion III': 'champion1.png',
         'Champion IV': 'champion1.png',
         'Champion V': 'champion1.png',
-        'Elite': 'elite.png'
+        'Elite': 'elite.png',
+        'Max': 'elite.png'
     };
 
     const requirements = {
-        'Bronze I': { stockPrice: 150, increaseGainPrice: 55 },
-        'Bronze II': { stockPrice: 400, increaseGainPrice: 65 },
-        'Bronze III': { stockPrice: 800, increaseGainPrice: 75 },
-        'Silver I': { stockPrice: 1500, increaseGainPrice: 90 },
-        'Silver II': { stockPrice: 2500, increaseGainPrice: 105 },
-        'Silver III': { stockPrice: 4000, increaseGainPrice: 120 },
-        'Gold I': { stockPrice: 6000, increaseGainPrice: 140 },
-        'Gold II': { stockPrice: 8000, increaseGainPrice: 165 },
-        'Gold III': { stockPrice: 10000, increaseGainPrice: 195 },
-        'Platinum I': { stockPrice: 13000, increaseGainPrice: 225 },
-        'Platinum II': { stockPrice: 17000, increaseGainPrice: 260 },
-        'Platinum III': { stockPrice: 22000, increaseGainPrice: 300 },
-        'Diamond I': { stockPrice: 28000, increaseGainPrice: 375 },
-        'Diamond II': { stockPrice: 35000, increaseGainPrice: 450 },
-        'Diamond III': { stockPrice: 42000, increaseGainPrice: 525 },
-        'Diamond IV': { stockPrice: 50000, increaseGainPrice: 650 },
-        'Diamond V': { stockPrice: 60000, increaseGainPrice: 800 },
-        'Champion I': { stockPrice: 75000, increaseGainPrice: 950 },
-        'Champion II': { stockPrice: 90000, increaseGainPrice: 1150 },
-        'Champion III': { stockPrice: 120000, increaseGainPrice: 1400 },
-        'Champion IV': { stockPrice: 160000, increaseGainPrice: 1700 },
-        'Champion V': { stockPrice: 250000, increaseGainPrice: 2000 },
-        'Elite': { stockPrice: "Max Rank", increaseGainPrice: "Max Rank" } // Added Elite for completion
+        'Bronze I': { stockPrice: 0, increaseGainPrice: 0 },
+        'Bronze II': { stockPrice: 150, increaseGainPrice: 55 },
+        'Bronze III': { stockPrice: 400, increaseGainPrice: 65 },
+        'Silver I': { stockPrice: 800, increaseGainPrice: 75 },
+        'Silver II': { stockPrice: 1500, increaseGainPrice: 90 },
+        'Silver III': { stockPrice: 2500, increaseGainPrice: 105 },
+        'Gold I': { stockPrice: 4000, increaseGainPrice: 120 },
+        'Gold II': { stockPrice: 6000, increaseGainPrice: 140 },
+        'Gold III': { stockPrice: 8000, increaseGainPrice: 165 },
+        'Platinum I': { stockPrice: 10000, increaseGainPrice: 195 },
+        'Platinum II': { stockPrice: 13000, increaseGainPrice: 225 },
+        'Platinum III': { stockPrice: 17000, increaseGainPrice: 260 },
+        'Diamond I': { stockPrice: 22000, increaseGainPrice: 300 },
+        'Diamond II': { stockPrice: 28000, increaseGainPrice: 375 },
+        'Diamond III': { stockPrice: 35000, increaseGainPrice: 450 },
+        'Diamond IV': { stockPrice: 42000, increaseGainPrice: 525 },
+        'Diamond V': { stockPrice: 50000, increaseGainPrice: 650 },
+        'Champion I': { stockPrice: 60000, increaseGainPrice: 800 },
+        'Champion II': { stockPrice: 75000, increaseGainPrice: 950 },
+        'Champion III': { stockPrice: 90000, increaseGainPrice: 1150 },
+        'Champion IV': { stockPrice: 120000, increaseGainPrice: 1400 },
+        'Champion V': { stockPrice: 160000, increaseGainPrice: 1700 },
+        'Elite': { stockPrice: 250000, increaseGainPrice: 2000 },
+        'Max': { stockPrice: 'Max Rank Reached', increaseGainPrice: 'Max Rank Reached'}
     };
 
     const currentRankElement = document.getElementById('currentRank');
@@ -88,9 +90,20 @@ document.addEventListener('DOMContentLoaded', function() {
     function updateRank(rank) {
         currentRankElement.textContent = `Current Rank: ${rank}`;
         currentRankImageElement.style.backgroundImage = `url(${rankImages[rank]})`;
-        const currentRequirements = requirements[rank];
-        document.querySelectorAll('.progress-text')[0].textContent = `Reach $${currentRequirements.stockPrice} stock price`;
-        document.querySelectorAll('.progress-text')[1].textContent = `Reach $${currentRequirements.increaseGainPrice} max gain`;
+        const nextRank = getNextRank(rank);
+        if (nextRank) {
+            const nextRequirements = requirements[nextRank];
+            document.querySelectorAll('.progress-text')[0].textContent = `Reach $${nextRequirements.stockPrice} stock price`;
+            document.querySelectorAll('.progress-text')[1].textContent = `Reach $${nextRequirements.increaseGainPrice} max gain`;
+        }
+    }
+
+    function getNextRank(rank) {
+        const currentIndex = ranks.indexOf(rank);
+        if (currentIndex < 0 || currentIndex >= ranks.length - 1) {
+            return null; // No next rank available
+        }
+        return ranks[currentIndex + 1];
     }
 
     function updateProgressBars(stockPrice, increaseGainPrice) {
@@ -113,8 +126,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 chrome.storage.local.set({ rank: nextRank }, function() {
                     updateRank(nextRank);
                 });
+            } else if (data.rank == "Elite"){
+                alert('You are already at the highest rank! Try getting on the leaderbord');
             } else {
-                alert('Requirements not met or already at highest rank.');
+                alert('Requirements Not Met')
             }
         });
     });
