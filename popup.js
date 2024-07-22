@@ -245,5 +245,15 @@ document.getElementById('increaseGainButton').addEventListener('click', increase
 chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
   if (message.action === 'updateStockPrice') {
     updatePopup(message.stockPrice);
+
+    chrome.storage.local.get(['stockPrice', 'stockPriceHistory', 'maxGain', 'increaseGainPrice','buttonGain'], function(data) {
+      const stockPrice = data.stockPrice || 100; // Default to 100 if not set
+      const maxGain = data.maxGain || 45; // Default max gain if not set
+      const increaseGainPrice = data.increaseGainPrice || 150; // Default increase price if not set
+      const buttonGain = data.buttonGain || 10;
+      updatePopup(message.stockPrice, increaseGainPrice, buttonGain);
+      updateMaxGain(maxGain, increaseGainPrice);
+    });
+
   }
 });
