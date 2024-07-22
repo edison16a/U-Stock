@@ -1,9 +1,10 @@
-chrome.storage.local.get(['stockPrice', 'stockPriceHistory', 'maxGain', 'maxLoss', 'increaseGainPrice'], function(data) {
+chrome.storage.local.get(['stockPrice', 'stockPriceHistory', 'maxGain', 'maxLoss', 'increaseGainPrice', 'buttonGain'], function(data) {
     let stockPrice = data.stockPrice;
     let stockPriceHistory = data.stockPriceHistory || [];
     let maxGain = data.maxGain || 45;
     let maxLoss = data.maxLoss || 25;
     let increaseGainPrice = data.increaseGainPrice || 150; // Default price to increase max gain
+    let buttonGain = data.buttonGain || 10;
 
     if (typeof stockPrice === 'undefined') {
         stockPrice = 100; // Default stock price

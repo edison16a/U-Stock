@@ -49,12 +49,14 @@
       if (closeButton) {
         closeButton.addEventListener('click', function() {
           document.body.removeChild(overlay);
-          chrome.storage.local.get(['stockPrice', 'maxGain', 'increaseGainPrice'], function(data) {
+          chrome.storage.local.get(['stockPrice', 'maxGain', 'increaseGainPrice', 'buttonGain'], function(data) {
             let stockPrice = data.stockPrice || 100;
             let maxGain = data.maxGain || 45;
             let increaseGainPrice = data.increaseGainPrice || 150;
-          updatePopup(stockPrice, increaseGainPrice)
-          updateIncreaseGainButton(increaseGainPrice)
+            let buttonGain = data.buttonGain || 10;
+            
+          updatePopup(stockPrice, increaseGainPrice, buttonGain)
+          updateIncreaseGainButton(increaseGainPrice, buttonGain)
           updateMaxGain(maxGain, increaseGainPrice)
 
           chrome.action.setBadgeText({ text: formatBadgeText(stockPrice) });
@@ -94,16 +96,16 @@
   }
 
 // Function to update popup HTML with current stock price and graph
-function updatePopup(stockPrice, increaseGainPrice) {
+function updatePopup(stockPrice, increaseGainPrice, buttonGain) {
   document.getElementById('stockPrice').textContent = '$' + stockPrice;
-  updateIncreaseGainButton(increaseGainPrice);
+  updateIncreaseGainButton(increaseGainPrice, buttonGain);
   drawGraph();
 }
 
 // Function to update the increase gain button text
-function updateIncreaseGainButton(increaseGainPrice) {
+function updateIncreaseGainButton(increaseGainPrice, buttonGain) {
   const increaseGainButton = document.getElementById('increaseGainButton');
-  increaseGainButton.textContent = `Increase Stock Gain ($${increaseGainPrice})`;
+  increaseGainButton.textContent = `Increase Stock Gain by ${buttonGain} ($${increaseGainPrice})`;
 }
 
 // Function to draw a basic graph based on stock price
@@ -166,14 +168,18 @@ function drawGraph() {
 
 // Function to increase max gain
 function increaseMaxGain() {
-  chrome.storage.local.get(['stockPrice', 'maxGain', 'increaseGainPrice'], function(data) {
+  chrome.storage.local.get(['stockPrice', 'maxGain', 'increaseGainPrice', 'buttonGain'], function(data) {
     let stockPrice = data.stockPrice || 100;
     let maxGain = data.maxGain || 45;
     let increaseGainPrice = data.increaseGainPrice || 150;
+    let buttonGain = data.buttonGain || 10;
 
     if (stockPrice >= increaseGainPrice) {
       stockPrice -= increaseGainPrice;
-      maxGain += 10;
+      maxGain += buttonGain;
+      console.log('New Max Gain is' + maxGain)
+      console.log('Changed max gain by' + buttonGain)
+
       maxLoss = Math.ceil(0.65 * maxGain);
       increaseGainPrice += 50;
 
@@ -207,7 +213,7 @@ function increaseMaxGain() {
         'increaseGainPrice': increaseGainPrice,
         'maxLoss': maxLoss
       }, function() {
-        updatePopup(stockPrice, increaseGainPrice);
+        updatePopup(stockPrice, increaseGainPrice, buttonGain);
         updateMaxGain(maxGain, increaseGainPrice);
         console.log(`Max gain increased to: ${maxGain}`);
       });
@@ -223,11 +229,12 @@ function updateMaxGain(maxGain, increaseGainPrice) {
 }
 
 // Initialize popup with initial stock price, max gain, and graph
-chrome.storage.local.get(['stockPrice', 'stockPriceHistory', 'maxGain', 'increaseGainPrice'], function(data) {
+chrome.storage.local.get(['stockPrice', 'stockPriceHistory', 'maxGain', 'increaseGainPrice','buttonGain'], function(data) {
   const stockPrice = data.stockPrice || 100; // Default to 100 if not set
   const maxGain = data.maxGain || 45; // Default max gain if not set
   const increaseGainPrice = data.increaseGainPrice || 150; // Default increase price if not set
-  updatePopup(stockPrice, increaseGainPrice);
+  const buttonGain = data.buttonGain || 10;
+  updatePopup(stockPrice, increaseGainPrice, buttonGain);
   updateMaxGain(maxGain, increaseGainPrice);
 });
 
