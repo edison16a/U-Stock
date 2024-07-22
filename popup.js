@@ -105,12 +105,12 @@ function updatePopup(stockPrice, increaseGainPrice, buttonGain) {
 // Function to update the increase gain button text
 function updateIncreaseGainButton(increaseGainPrice, buttonGain) {
   const increaseGainButton = document.getElementById('increaseGainButton');
-  increaseGainButton.textContent = `Increase Stock Gain by ${buttonGain} ($${increaseGainPrice})`;
+  increaseGainButton.textContent = `Increase Max Stock Gain by ${buttonGain} ($${increaseGainPrice})`;
 }
 
 // Function to draw a basic graph based on stock price
 function drawGraph() {
-  chrome.storage.local.get('stockPriceHistory', function(data) {
+  chrome.storage.local.get(['stockPriceHistory','stockPrice'], function(data) {
     const stockPriceHistory = data.stockPriceHistory || [];
     const canvas = document.getElementById('stockGraph');
     const ctx = canvas.getContext('2d');
@@ -159,8 +159,10 @@ function drawGraph() {
       });
 
 
-      
       ctx.strokeStyle = 'green';
+
+
+
       ctx.stroke();
     }
   });
