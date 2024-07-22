@@ -96,6 +96,9 @@ document.addEventListener('DOMContentLoaded', function() {
             document.querySelectorAll('.progress-text')[0].textContent = `Reach $${nextRequirements.stockPrice} stock price`;
             document.querySelectorAll('.progress-text')[1].textContent = `Reach $${nextRequirements.maxGain} max gain`;
         }
+        chrome.storage.local.get(['rank', 'stockPrice', 'maxGain', 'buttonGain'], function(data) {
+        updateProgressBars(data.stockPrice, data.maxGain);
+        })
     }
 
     function getNextRank(rank) {
